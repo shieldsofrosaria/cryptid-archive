@@ -3,247 +3,325 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Field Research Archive // Cryptid Dossiers</title>
+  <title>SOLUTION_09 // ARKS BIOLOGICAL DATABASE</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Lucide Icons & Animate On Scroll (AOS) -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+  <!-- Futuristic Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cyberDark: '#050711',
+            electroCyan: '#00f0ff',
+            neonMagenta: '#ff007b',
+            accentGold: '#fcee0a',
+            panelBg: 'rgba(12, 17, 34, 0.75)',
+            borderGlow: 'rgba(0, 240, 255, 0.3)',
+          },
+          fontFamily: {
+            display: ['Orbitron', 'monospace'],
+            tech: ['Rajdhani', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
   <style>
-    :root {
-      --bg: #0f1115;
-      --card-bg: #161922;
-      --border: #282e3d;
-      --accent: #d97736;
-      --text: #e2e8f0;
-      --text-muted: #94a3b8;
-      --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    /* High-tech Sci-Fi Chamfered Edges */
+    .clip-chamfer-sm {
+      clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+    }
+    .clip-chamfer-lg {
+      clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+    }
+    .clip-banner {
+      clip-path: polygon(14px 0%, calc(100% - 14px) 0%, 100% 100%, 0% 100%);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      background-color: var(--bg);
-      color: var(--text);
-      font-family: var(--font-mono);
-      padding: 2rem 1rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+    /* Ambient Hexagonal/Circuit Grid */
+    .bg-cyber-grid {
+      background-size: 40px 40px;
+      background-image: 
+        linear-gradient(to right, rgba(0, 240, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0, 240, 255, 0.05) 1px, transparent 1px);
     }
 
-    header {
-      text-align: center;
-      margin-bottom: 2.5rem;
-      border-bottom: 1px dashed var(--border);
-      padding-bottom: 1.5rem;
-      width: 100%;
-      max-width: 1100px;
+    /* CRT Scanline Overlay Effect */
+    .scanline {
+      background: linear-gradient(
+        to bottom,
+        rgba(255,255,255,0),
+        rgba(255,255,255,0) 50%,
+        rgba(0, 0, 0, 0.3) 50%,
+        rgba(0, 0, 0, 0.3)
+      );
+      background-size: 100% 4px;
     }
 
-    h1 {
-      font-size: 1.5rem;
-      letter-spacing: 2px;
-      color: var(--accent);
-      text-transform: uppercase;
-      margin-bottom: 0.5rem;
+    /* Neon Text Glow */
+    .glow-text-cyan {
+      text-shadow: 0 0 8px rgba(0, 240, 255, 0.8), 0 0 20px rgba(0, 240, 255, 0.4);
     }
-
-    p.subtitle {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-    }
-
-    /* Grid Gallery */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.5rem;
-      width: 100%;
-      max-width: 1100px;
-    }
-
-    .card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      overflow: hidden;
-      cursor: pointer;
-      transition: transform 0.15s ease, border-color 0.15s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-3px);
-      border-color: var(--accent);
-    }
-
-    .card img {
-      width: 100%;
-      height: 220px;
-      object-fit: cover;
-      display: block;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .card-body {
-      padding: 1rem;
-    }
-
-    .tag {
-      display: inline-block;
-      font-size: 0.7rem;
-      background: rgba(217, 119, 54, 0.15);
-      color: var(--accent);
-      padding: 2px 6px;
-      border-radius: 2px;
-      margin-bottom: 0.5rem;
-      text-transform: uppercase;
-    }
-
-    .card-title {
-      font-size: 1rem;
-      font-weight: bold;
-      margin-bottom: 0.25rem;
-    }
-
-    .card-meta {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-    }
-
-    /* Dossier Modal */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(4px);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
-      z-index: 50;
-    }
-
-    .modal-overlay.active { display: flex; }
-
-    .modal {
-      background: var(--card-bg);
-      border: 1px solid var(--accent);
-      max-width: 600px;
-      width: 100%;
-      border-radius: 4px;
-      overflow: hidden;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-    }
-
-    .modal img {
-      width: 100%;
-      max-height: 350px;
-      object-fit: cover;
-    }
-
-    .modal-content {
-      padding: 1.5rem;
-    }
-
-    .modal-header {
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 0.75rem;
-      margin-bottom: 1rem;
-    }
-
-    .modal-desc {
-      font-size: 0.85rem;
-      line-height: 1.6;
-      color: #cbd5e1;
-      margin-bottom: 1.25rem;
-    }
-
-    .close-btn {
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      padding: 0.5rem 1rem;
-      font-family: inherit;
-      font-size: 0.8rem;
-      font-weight: bold;
-      cursor: pointer;
-      float: right;
+    .glow-text-magenta {
+      text-shadow: 0 0 8px rgba(255, 0, 123, 0.8), 0 0 20px rgba(255, 0, 123, 0.4);
     }
   </style>
 </head>
-<body>
 
-  <header>
-    <h1>// Field Archive: Cryptid Dossiers</h1>
-    <p class="subtitle">UNVERIFIED BIOLOGICAL SPECIMENS & ENCOUNTER EVIDENCE</p>
-  </header>
+<body class="bg-cyberDark text-slate-100 font-tech min-h-screen bg-cyber-grid relative overflow-x-hidden selection:bg-electroCyan selection:text-black">
+  <div class="pointer-events-none fixed inset-0 scanline z-50 opacity-20"></div>
 
-  <main class="grid" id="cryptid-grid"></main>
+  <!-- Background Ambient Glows -->
+  <div class="pointer-events-none fixed -top-40 left-1/2 -translate-x-1/2 w-[800px] h-[350px] bg-electroCyan/10 blur-[140px] rounded-full"></div>
+  <div class="pointer-events-none fixed -bottom-40 right-10 w-[500px] h-[300px] bg-neonMagenta/10 blur-[150px] rounded-full"></div>
 
-  <!-- Modal / Case File Popup -->
-  <div class="modal-overlay" id="modal-overlay" onclick="closeDossier(event)">
-    <div class="modal" onclick="event.stopPropagation()">
-      <img id="modal-img" src="" alt="" />
-      <div class="modal-content">
-        <div class="modal-header">
-          <span class="tag" id="modal-tag"></span>
-          <h2 id="modal-title" style="margin-top: 4px;"></h2>
-          <div class="card-meta" id="modal-site"></div>
+  <!-- Top System Header Bar -->
+  <div class="w-full border-b border-borderGlow bg-black/60 backdrop-blur-md px-6 py-2 flex items-center justify-between text-xs font-display tracking-widest text-electroCyan/80">
+    <div class="flex items-center gap-2">
+      <span class="inline-block w-2 h-2 bg-electroCyan animate-ping"></span>
+      <span>NET // ARKS.DATALINK.ACTIVE</span>
+    </div>
+    <div class="hidden sm:block text-slate-400">SECTOR_ID: <span class="text-electroCyan">SOLUTION-09</span></div>
+    <div>TERMINAL_BUILD: <span class="text-accentGold">v9.82.0</span></div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 relative z-10">
+
+    <!-- Hero / Title Section -->
+    <header class="text-center mb-12" data-aos="fade-down" data-aos-duration="800">
+      <div class="inline-block px-4 py-1 bg-electroCyan/10 border border-electroCyan/40 text-electroCyan font-display text-xs tracking-widest uppercase mb-4 clip-chamfer-sm">
+        Extraterrestrial & Cryptid Bio-Index
+      </div>
+      <h1 class="font-display font-black text-4xl sm:text-5xl lg:text-6xl uppercase tracking-wider text-white glow-text-cyan mb-3">
+        Field Archive // S9
+      </h1>
+      <p class="text-slate-400 max-w-2xl mx-auto text-base sm:text-lg uppercase tracking-wider">
+        Unregistered biological organisms, ambient cryptids, and close-encounter specimens cataloged for ARKS deployment analysis.
+      </p>
+    </header>
+
+    <!-- Interactive Filter & Search Bar -->
+    <section class="mb-10 flex flex-col md:flex-row items-center justify-between gap-4 p-4 bg-panelBg/80 border border-borderGlow backdrop-blur-md clip-chamfer-sm" data-aos="fade-up">
+      <!-- Category Filter Tabs -->
+      <div class="flex flex-wrap gap-2 w-full md:w-auto" id="filter-container">
+        <button onclick="filterEntries('all')" class="filter-btn active px-4 py-1.5 font-display text-xs tracking-wider uppercase border border-electroCyan bg-electroCyan text-black font-bold transition duration-200">
+          ALL SPECIMENS
+        </button>
+        <button onclick="filterEntries('Carnivorous Flora')" class="filter-btn px-4 py-1.5 font-display text-xs tracking-wider uppercase border border-borderGlow hover:border-electroCyan hover:bg-electroCyan/10 transition duration-200">
+          Flora
+        </button>
+        <button onclick="filterEntries('Close Encounter Entity')" class="filter-btn px-4 py-1.5 font-display text-xs tracking-wider uppercase border border-borderGlow hover:border-electroCyan hover:bg-electroCyan/10 transition duration-200">
+          Entities
+        </button>
+      </div>
+
+      <!-- Live Search Box -->
+      <div class="relative w-full md:w-72">
+        <i data-lucide="search" class="absolute left-3 top-2.5 w-4 h-4 text-electroCyan/70"></i>
+        <input 
+          type="text" 
+          id="search-input" 
+          oninput="handleSearch()"
+          placeholder="SEARCH REGISTRY..." 
+          class="w-full pl-9 pr-4 py-1.5 bg-black/60 border border-borderGlow text-sm tracking-wider font-tech text-slate-100 placeholder-slate-500 focus:outline-none focus:border-electroCyan transition"
+        />
+      </div>
+    </section>
+
+    <!-- Specimen Card Grid -->
+    <main id="cryptid-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></main>
+
+    <!-- Empty Results Fallback -->
+    <div id="no-results" class="hidden text-center py-20 border border-dashed border-borderGlow bg-panelBg/40">
+      <i data-lucide="alert-triangle" class="w-12 h-12 text-accentGold mx-auto mb-3"></i>
+      <p class="font-display uppercase tracking-widest text-slate-300">NO MATCHING DATA ENTRIES IN TERMINAL</p>
+    </div>
+
+  </div>
+
+  <!-- Holographic Dossier Modal -->
+  <div id="modal-overlay" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/80 backdrop-blur-md" onclick="closeDossier(event)">
+    <div class="relative w-full max-w-2xl bg-panelBg border border-electroCyan shadow-[0_0_35px_rgba(0,240,255,0.35)] clip-chamfer-lg overflow-hidden animate-[scale_0.2s_ease-out]" onclick="event.stopPropagation()">
+      
+      <!-- Modal Terminal Top Bar -->
+      <div class="flex items-center justify-between px-6 py-3 border-b border-borderGlow bg-black/40">
+        <div class="flex items-center gap-2 text-xs font-display tracking-widest text-slate-300">
+          <i data-lucide="shield-alert" class="w-4 h-4 text-neonMagenta"></i>
+          <span id="modal-specimen-id" class="text-electroCyan">ID: ---</span>
         </div>
-        <p class="modal-desc" id="modal-desc"></p>
-        <button class="close-btn" onclick="closeDossier()">CLOSE DOSSIER</button>
+        <button onclick="closeDossier()" class="text-slate-400 hover:text-white transition">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Modal Image Screen -->
+      <div class="relative max-h-80 overflow-hidden border-b border-borderGlow">
+        <img id="modal-img" src="" alt="" class="w-full h-full object-cover brightness-95 contrast-105" />
+        <div class="absolute bottom-2 right-2 px-2 py-1 bg-black/70 border border-borderGlow font-display text-[10px] tracking-wider text-electroCyan uppercase">
+          OPTICAL_FEED // VERIFIED
+        </div>
+      </div>
+
+      <!-- Modal Details -->
+      <div class="p-6 space-y-4">
+        <div>
+          <span id="modal-tag" class="inline-block px-2.5 py-0.5 border border-neonMagenta/60 bg-neonMagenta/10 text-neonMagenta font-display text-xs tracking-wider uppercase mb-2"></span>
+          <h2 id="modal-title" class="font-display font-bold text-2xl tracking-wide text-white glow-text-cyan"></h2>
+          <p id="modal-site" class="text-xs font-semibold text-slate-400 tracking-wider uppercase mt-1"></p>
+        </div>
+
+        <div class="border-t border-dashed border-borderGlow pt-3">
+          <h4 class="font-display text-xs text-electroCyan tracking-widest uppercase mb-1">FIELD ANALYSIS & TELEMETRY:</h4>
+          <p id="modal-desc" class="text-sm leading-relaxed text-slate-300 font-tech"></p>
+        </div>
+
+        <div class="flex justify-end pt-2">
+          <button onclick="closeDossier()" class="px-6 py-2 font-display text-xs uppercase tracking-widest border border-electroCyan text-electroCyan hover:bg-electroCyan hover:text-black font-bold transition clip-chamfer-sm">
+            TERMINATE STREAM
+          </button>
+        </div>
       </div>
     </div>
   </div>
 
   <script>
-    // EDIT YOUR COLLECTION HERE:
+    // EDIT & EXPAND YOUR CRYPTID ENTRIES HERE:
     const cryptids = [
       {
-        id: "CF-01",
+        id: "CF-089",
         name: "The Crimson Tangler",
         category: "Carnivorous Flora",
-        site: "Site A-1 (Pine Ridge Basin)",
-        image: "images/crimson-tangler.jpg", // Path to your saved AI photo
-        description: "An arboreal ambush flora displaying mobile root tendrils and spiked maw-like bracts. Appears dormant until organic motion triggers rapid constricting response."
+        site: "SECTOR 04 // PINE RIDGE BASIN",
+        image: "images/crimson-tangler.jpg",
+        description: "An aggressive sub-canopy ambush flora exhibiting autonomous root movement and calcified, tooth-like bracts. Specimen mimics dormant deadwood until proximity vibration triggers constrictive vine capture."
       },
       {
-        id: "CE-04",
+        id: "CE-014",
         name: "Glimmer Hound",
         category: "Close Encounter Entity",
-        site: "Site C-7 (Old Quarry Road)",
+        site: "SECTOR 09 // OLD QUARRY CONDUIT",
         image: "images/glimmer-hound.jpg",
         description: "Quadrupedal apparition emitting soft ultraviolet bioluminescence. Leaves no footprint depression despite displacing underbrush."
       }
     ];
 
+    let currentFilter = 'all';
+    let searchQuery = '';
+
     const grid = document.getElementById("cryptid-grid");
+    const noResults = document.getElementById("no-results");
 
-    // Render Cards
-    cryptids.forEach((item, index) => {
-      const card = document.createElement("article");
-      card.className = "card";
-      card.onclick = () => openDossier(index);
-      card.innerHTML = `
-        <img src="${item.image}" alt="${item.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/400x250/161922/94a3b8?text=Image+Missing'" />
-        <div class="card-body">
-          <span class="tag">${item.category}</span>
-          <div class="card-title">${item.name}</div>
-          <div class="card-meta">${item.site}</div>
-        </div>
-      `;
-      grid.appendChild(card);
-    });
+    function renderCards() {
+      grid.innerHTML = "";
+      const filtered = cryptids.filter(item => {
+        const matchesCategory = currentFilter === 'all' || item.category === currentFilter;
+        const matchesSearch = item.name.toLowerCase().includes(searchQuery) ||
+                              item.site.toLowerCase().includes(searchQuery) ||
+                              item.description.toLowerCase().includes(searchQuery);
+        return matchesCategory && matchesSearch;
+      });
 
-    function openDossier(index) {
-      const item = cryptids[index];
+      if (filtered.length === 0) {
+        noResults.classList.remove("hidden");
+      } else {
+        noResults.classList.add("hidden");
+        filtered.forEach((item, index) => {
+          const card = document.createElement("article");
+          card.setAttribute("data-aos", "fade-up");
+          card.setAttribute("data-aos-delay", (index * 100).toString());
+          card.className = "group relative bg-panelBg/80 border border-borderGlow hover:border-electroCyan backdrop-blur-md clip-chamfer-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_0_25px_rgba(0,240,255,0.25)] cursor-pointer overflow-hidden";
+          
+          card.onclick = () => openDossier(item);
+
+          card.innerHTML = `
+            <div class="relative h-56 overflow-hidden border-b border-borderGlow">
+              <img 
+                src="${item.image}" 
+                alt="${item.name}" 
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 brightness-90 group-hover:brightness-100" 
+                loading="lazy" 
+                onerror="this.src='https://via.placeholder.com/600x400/0c1122/00f0ff?text=FEED+OFFLINE'" 
+              />
+              <div class="absolute top-2 right-2 bg-black/70 px-2 py-0.5 border border-borderGlow text-[10px] font-display text-electroCyan">
+                ${item.id}
+              </div>
+            </div>
+            
+            <div class="p-5">
+              <span class="inline-block text-[11px] font-display uppercase tracking-widest px-2 py-0.5 border border-neonMagenta/70 bg-neonMagenta/10 text-neonMagenta mb-2 shadow-[0_0_8px_rgba(255,0,123,0.3)]">
+                ${item.category}
+              </span>
+              <h3 class="font-display font-bold text-lg text-white group-hover:text-electroCyan tracking-wide transition-colors">
+                ${item.name}
+              </h3>
+              <div class="flex items-center gap-1.5 text-xs text-slate-400 font-semibold tracking-wider uppercase mt-1">
+                <i data-lucide="map-pin" class="w-3.5 h-3.5 text-electroCyan/80"></i>
+                <span>${item.site}</span>
+              </div>
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+      }
+
+      // Reinitialize Lucide Icons after DOM updates
+      lucide.createIcons();
+    }
+
+    function filterEntries(category) {
+      currentFilter = category;
+      document.querySelectorAll(".filter-btn").forEach(btn => {
+        btn.classList.remove("border-electroCyan", "bg-electroCyan", "text-black", "font-bold");
+        btn.classList.add("border-borderGlow");
+      });
+      event.target.classList.add("border-electroCyan", "bg-electroCyan", "text-black", "font-bold");
+      renderCards();
+    }
+
+    function handleSearch() {
+      searchQuery = document.getElementById("search-input").value.toLowerCase();
+      renderCards();
+    }
+
+    function openDossier(item) {
       document.getElementById("modal-img").src = item.image;
-      document.getElementById("modal-tag").textContent = item.category + " // " + item.id;
+      document.getElementById("modal-specimen-id").textContent = "SPECIMEN // " + item.id;
+      document.getElementById("modal-tag").textContent = item.category;
       document.getElementById("modal-title").textContent = item.name;
-      document.getElementById("modal-site").textContent = "Location: " + item.site;
+      document.getElementById("modal-site").textContent = "DISCOVERY ZONE // " + item.site;
       document.getElementById("modal-desc").textContent = item.description;
-      document.getElementById("modal-overlay").classList.add("active");
+
+      const overlay = document.getElementById("modal-overlay");
+      overlay.classList.remove("hidden");
+      overlay.classList.add("flex");
+      lucide.createIcons();
     }
 
     function closeDossier(event) {
-      document.getElementById("modal-overlay").classList.remove("active");
+      const overlay = document.getElementById("modal-overlay");
+      overlay.classList.add("hidden");
+      overlay.classList.remove("flex");
     }
+
+    // Initialize Animations and UI on load
+    window.addEventListener("DOMContentLoaded", () => {
+      AOS.init({ once: true, duration: 600 });
+      renderCards();
+      lucide.createIcons();
+    });
   </script>
 </body>
 </html>
