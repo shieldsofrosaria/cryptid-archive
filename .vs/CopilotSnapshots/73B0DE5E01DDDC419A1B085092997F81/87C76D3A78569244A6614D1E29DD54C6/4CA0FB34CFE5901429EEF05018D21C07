@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -117,13 +117,13 @@
     <section class="mb-10 flex flex-col md:flex-row items-center justify-between gap-4 p-4 bg-panelBg/80 border border-borderGlow backdrop-blur-md clip-chamfer-sm" data-aos="fade-up">
       <!-- Category Filter Tabs -->
       <div class="flex flex-wrap gap-2 w-full md:w-auto" id="filter-container">
-        <button onclick="filterEntries('all', event)" class="filter-btn active px-4 py-1.5 font-display text-xs tracking-wider uppercase border border-electroCyan bg-electroCyan text-black font-bold transition duration-200">
+        <button onclick="filterEntries('all')" class="filter-btn active px-4 py-1.5 font-display text-xs tracking-wider uppercase border border-electroCyan bg-electroCyan text-black font-bold transition duration-200">
           ALL SPECIMENS
         </button>
-        <button onclick="filterEntries('Carnivorous Flora', event)" class="filter-btn px-4 py-1.5 font-display text-xs tracking-wider uppercase border border-borderGlow hover:border-electroCyan hover:bg-electroCyan/10 transition duration-200">
+        <button onclick="filterEntries('Carnivorous Flora')" class="filter-btn px-4 py-1.5 font-display text-xs tracking-wider uppercase border border-borderGlow hover:border-electroCyan hover:bg-electroCyan/10 transition duration-200">
           Flora
         </button>
-        <button onclick="filterEntries('Close Encounter Entity', event)" class="filter-btn px-4 py-1.5 font-display text-xs tracking-wider uppercase border border-borderGlow hover:border-electroCyan hover:bg-electroCyan/10 transition duration-200">
+        <button onclick="filterEntries('Close Encounter Entity')" class="filter-btn px-4 py-1.5 font-display text-xs tracking-wider uppercase border border-borderGlow hover:border-electroCyan hover:bg-electroCyan/10 transition duration-200">
           Entities
         </button>
       </div>
@@ -281,16 +281,13 @@
       lucide.createIcons();
     }
 
-    function filterEntries(category, ev) {
+    function filterEntries(category) {
       currentFilter = category;
       document.querySelectorAll(".filter-btn").forEach(btn => {
         btn.classList.remove("border-electroCyan", "bg-electroCyan", "text-black", "font-bold");
         btn.classList.add("border-borderGlow");
       });
-      const target = ev && ev.target ? ev.target : document.activeElement;
-      if (target) {
-        target.classList.add("border-electroCyan", "bg-electroCyan", "text-black", "font-bold");
-      }
+      event.target.classList.add("border-electroCyan", "bg-electroCyan", "text-black", "font-bold");
       renderCards();
     }
 
